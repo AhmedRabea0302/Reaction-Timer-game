@@ -1,6 +1,6 @@
 <template>
   <h1>Timer Reaction Game</h1>
-  <button @click="start">Play</button>
+  <button @click="start" disabled="isPlaying">Play</button>
 
   <div v-if="isPlaying">
     <Block :delay="delay" />
