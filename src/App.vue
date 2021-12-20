@@ -1,10 +1,9 @@
 <template>
   <h1>Timer Reaction Game</h1>
-  <button @click="start" disabled="isPlaying">Play</button>
+  <button @click="start" :disabled="isPlaying">Play</button>
 
-  <div v-if="isPlaying">
-    <Block :delay="delay" />
-  </div>
+  <Block v-if="isPlaying" :delay="delay" @end="endGame"/>
+  <Results v-if="showResults" :score="score"/>
 </template>
 
 <script>
@@ -16,15 +15,24 @@ export default {
   data() {
     return {
       isPlaying: false,
-      delay: null
+      delay: null,
+      score: null,
+      showResults: false,
     }
   },
   methods: {
     start() {
       this.delay = 2000 + Math.random() * 5000;
-      setTimeout(() => this.isPlaying = true, this.delay)
-
+      this.isPlaying = true;
+      this.score = null,
       console.log(this.delay);
+      console.log(this.isPlaying);
+    },
+
+    endGame(reactionTime) {
+      this.score = reactionTime;
+      this.showResults = true;
+      this.isPlaying = false;
     }
   },
   components: {
@@ -32,6 +40,7 @@ export default {
     Results,
   },
 
+  
 }
 </script>
 
